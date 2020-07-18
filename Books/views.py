@@ -65,7 +65,10 @@ def add_book(request):
 
 def user(request):
     if request.method == 'GET':
-        return render(request,'Books/user.html'  )
+        orders = Order.objects.filter(user__username=User.username)
+        print(orders)
+        print(User.username)
+        return render(request,'Books/user.html',{'User_Name':User.username}  )
 
 """
 

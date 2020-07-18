@@ -63,6 +63,10 @@ def add_book(request):
     if request.method == 'GET':
         return render(request, 'Books/addbook.html', {'station_form' : BookStationRelationForm() , 'book_form' : BookForm() })
 
+def user(request):
+    if request.method == 'GET':
+        return render(request,'Books/user.html'  )
+
 """
 
 def register(request):

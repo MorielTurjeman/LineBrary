@@ -109,12 +109,12 @@
             </section>
         </section>     
         <section id="to_push_categories">
-            {% for category in categories %}
-            <section class="category bg-dark" name="' + category_fixed + '">
+            {% for category , books in books.items %}
+            <section class="category bg-dark" name="' {{category}} '">
                 <b>{{ category }}</b>
                 <section>
-                    {% for book in categories.books_set.all %}
-                    <img class='book' name='{{ books.books_set.bookname }}' src='{{ books.books_set.imageURL }}'></img>
+                    {% for book in books %}
+                        <img class='book' name='{{ book.bookname }}' src='{{ book.imageURL }}' title="Author: {{book.author}}<br><br>Gener: {{book.gener}}<br><br>Page Count: {{book.page_count}}<br><br>Condition: {{book.condition}}<br><br>Language: {{book.language}}<br><br>Cover Type: {{book.cover_type}}<br><br>Description: {{book.description}}"></img>
                     {% endfor %}
                 </section>
                 <span>See All</span>

@@ -143,6 +143,7 @@
         </section>
         <section id="to_fit_top_header"></section>
         <div class="col-sm-6 addBookContainer">
+            <div class="mt-2">{{ errMsg }}</div>
             <form  class="mt-5 mb-5" action="#" method="post">
                 {% csrf_token %}
                 {{ station_form|crispy }}

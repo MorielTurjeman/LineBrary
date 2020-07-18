@@ -8,6 +8,7 @@ from .forms import BookForm, BookStationRelationForm
 from django.http import HttpResponseRedirect
 from django.db import IntegrityError
 from random import shuffle
+import os
 # Create your views here.
 
 
@@ -18,9 +19,11 @@ def homepage(request):
         Books_For_Recomended = Book.objects.all().order_by('?')[:20]
         categories_array = [tup[0] for tup in categories]
         shuffle(categories_array)
-        categories_books_relation_array = []
+        categories_books_relation_array = {}
         for category in categories_array: 
-            categories_books_relation_array.append(Book.objects.filter(gener=category))
+            categories_books_relation_array[category] = Book.objects.filter(gener=category)
+        for x , y in categories_books_relation_array.items():
+            print(x , y)
         return render(request , "Books/index.html", { 'User_Name' : User.username , 'Books_For_Recomended' : Books_For_Recomended , 'categories' : categories_array , 'books' : categories_books_relation_array })
     else: 
         return redirect("login_page")
@@ -62,10 +65,6 @@ def logout_user(request):
 def add_book(request):
     if request.method == 'GET':
         return render(request, 'Books/addbook.html', {'station_form' : BookStationRelationForm() , 'book_form' : BookForm() })
-
-def user(request):
-    if request.method == 'GET':
-        return render(request,'Books/user.html'  )
 
 """
 

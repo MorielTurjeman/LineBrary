@@ -129,6 +129,7 @@ class Order(models.Model):
     order_date=models.DateTimeField(default=datetime.now, blank=True)
     returned=models.BooleanField(default=False)
 
+# contributions
 class AddBook(models.Model):
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     ISBN13 = models.ForeignKey(Book , on_delete=models.CASCADE)

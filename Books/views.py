@@ -1,5 +1,6 @@
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
-from .models import User , Book , BookStationRelation , Order , categories, Contributions, Wishlist
+from .models import User , Book , BookStationRelation , Order , categories, Contributions, Wishlist, stations
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from .forms import BookForm, BookStationRelationForm
@@ -69,14 +70,23 @@ def user(request):
         orders = Order.objects.filter(user__username=request.user)
         contributions= Contributions.objects.filter(user__username=request.user)
         wishlist= Wishlist.objects.filter(user__username=request.user)
-        
-        print(contributions)
         return render(request,'Books/user.html',{'User_Name':request.user, "orders" : orders, 'contributions':contributions,}  )
 
+# def loans(request):
+#     if request.method=='GET':
+#         bookstation=BookStationRelation.object.filter(Book.ISBN13=Book.ISBN13).delete()
+#             return render(request, )
 
+def linkBooks(request):
+    if request.method == 'GET':
+        BookStationRelation.objects.all().delete()
+        books = Book.objects.all()
+        for i in range(len(books)):
+            r = BookStationRelation.objects.create(ISBN13=books[i], station=stations[i % len(stations)][0])
+            r.save()
 
+        return JsonResponse({})
 
-"""
 
 def register(request):
     if request.method == 'GET':
@@ -93,7 +103,7 @@ def register(request):
                 #user = User.objects.create_user()
                 if user_form.is_valid() and profile_form.is_valid():
                     user_form.save()
-                    profile_form.save()
+                    profile_form.save() 
                     new_user = authenticate(username=profile_form.cleaned_data['userName'], password=profile_form.cleaned_data['password1'],)
                     login(request, new_user)
                     return redirect("/login_page/")
@@ -102,4 +112,4 @@ def register(request):
                 return render(request , "Books/register.html" , {'profile_form': profile_form , 'errMsg': profile_form.userName + profile_form.password1 + profile_form.email + profile_form.image.url})
         else:
             return render(request, "Books/register.html" , {'profile_form': profile_form , 'errMsg' : "Password did not match"})
-"""
+

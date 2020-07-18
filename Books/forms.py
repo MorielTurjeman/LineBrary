@@ -10,65 +10,13 @@ stations = [
     'Tel Aviv - University',
     'Tel Aviv - Ha-Shalom',
     'Tel Aviv - Ha-Hagana',
-    'Nahariya',
-    'Akko',
-    'Karmiel',
-    'Ahihod',
-    'Kiryat Motskin',
-    'Kiryat Haim',
-    'Haifa - Hutsot HaMifrats',
-    'Haifa - Merkazit HaMifrats',
-    'Haifa - Merkaz Hashmuna',
     'Haifa - Bat Galim',
     'Haifa - Hof Hakarmel',
-    'Beit Sheaan',
-    'Afula',
-    'Migdal HaEmek',
-    'Yofneaam',
-    'Atlit',
-    'Binayamina',
-    'Keysaria - Pardes Hana',
-    'Hedera West',
-    'Netanya',
-    'Netanya - Sapir',
     'Beit Yehushua',
     'Herzliya',
     'Petah Tikva - Kiryat Arye',
-    'Petah Tikva - Sgula',
-    'Rosh HaAin North',
     'Kfar Saba - Nordaoo',
-    'Hod HaSharon - Sokolov',
-    'Raanana South',
-    'Airport Ben Gurion',
-    "Modi'in outskirts",
-    "Modi'in Center",
-    'Jerusalem - Yizhak Navon',
-    'Kfar Habad',
-    'Lud - Ganei Aviv',
-    'Lud/Ramla',
-    'Beit Shemesh',
-    'Jesrualem - Tanahi Zoo',
-    'Jerusalem - Malha',
-    'Mazkeret Batia',
-    'Kiryat Malachi - Yoav',
-    'Kiryat Gat',
-    "Lehavim/Raha'at",
-    "Be'er Sheva North - University",
-    "Be'er Sheva Center",
-    'Dimona',
-    'Ofakim',
-    'Netivot',
-    'Sderot',
-    'Ashkelon',
-    'Asdod - Ad Halom',
-    'Yavne - West',
-    'Yavne - East',
-    "Be'er Yakov",
-    'Rishon Letsiyon - HaRishonim',
-    'Rishon Letsiyon - Moshe Dayan',
-    'Bat Yam - HaKomemiyut',
-    'Bat Yam - Yoseftal',
-    'Holon Junction'
+ 
 ]
 
 class BookForm(forms.ModelForm):
@@ -83,10 +31,12 @@ class BookForm(forms.ModelForm):
     image = forms.ImageField(required=False, label='Image', allow_empty_file=True)
     description = forms.CharField(label='Description')
     '''
-    
     class Meta:
         model = Book
-        fields = ('bookname', 'author', 'gener', 'language', 'page_count', 'cover_type', 'image', 'description',)
+        fields = ('bookname', 'author', 'gener', 'language', 'page_count', 'cover_type', 'image', 'description')
+
+    condition = forms.ChoiceField(label='Condition' , choices=(('Like New', 'Like New') , ('Used', 'Used') , ('Collectible','Collectible')))
+
 
 class BookStationRelationForm(forms.ModelForm):
     '''

@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'Books/css/style.css' %}">
+    <link rel="stylesheet" href="{% static '/Books/css/style.css' %}">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
@@ -63,39 +63,44 @@
                     <ul class="list-unstyled mt-4 ml-4">
                         {% for order in orders %}
                         <li class="media mt-4">
-                            <img class="mr-3" src="https://via.placeholder.com/110" alt="Generic placeholder image">
+                            <img class="mr-3" src="{{order.ISBN13.imageURL}}" alt="Generic placeholder image">
                             <div class="media-body">
                                 <h4 class="mt-0 mb-1">{{order.ISBN13.bookname}}</h4>
-                                    <b>Station:</b> Te-Aviv Center<br>
-                                    <b>Loan Date:</b> {{order.order_date}}
+                                <b>Station:</b> Te-Aviv Center<br>
+                                <b>Loan Date:</b> {{order.order_date}}
                             </div>
                         </li>
                         {% endfor %}
-                        <!-- <li class="media my-4">
-                            <img class="mr-3" src="https://via.placeholder.com/110" alt="Generic placeholder image">
-                            <div class="media-body">
-                                <h4 class="mt-0 mb-1">Harry Potter</h4>
-                                    <b>Station:</b> Te-Aviv Center<br>
-                                    <b>Loan Date:</b> 18.07.20
-                                
-                            </div>
-                        </li>
-                        <li class="media">
-                            <img class="mr-3" src="https://via.placeholder.com/110" alt="Generic placeholder image">
-                            <div class="media-body">
-                                <h4 class="mt-0 mb-1">Harry Potter</h4>
-                                <b>Station:</b> Te-Aviv Center<br>
-                                <b>Loan Date:</b> 18.07.20
-                            </div>
-                        </li> -->
                     </ul>
                 </div>
-                <div class="tab-pane fade" id="contributions" role="tabpanel" aria-labelledby="contributions-tab">2
+                <div class="tab-pane fade" id="contributions" role="tabpanel" aria-labelledby="contributions-tab">
+                    <ul class="list-unstyled mt-4 ml-4">
+                        {% for contribution in contributions %}
+                        <li class="media mt-4">
+                            <img class="mr-3" src="{{order.ISBN13.imageURL}}" alt="Generic placeholder image">
+                            <div class="media-body">
+                                <h4 class="mt-0 mb-1">{{contribution.ISBN13.bookname}}</h4>
+                                    <b>Station:</b> Tel-Aviv Center<br>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
                 </div>
-                <div class="tab-pane fade" id="wishlist" role="tabpanel" aria-labelledby="wishlist-tab">3</div>
-
+                <div class="tab-pane fade" id="wishlist" role="tabpanel" aria-labelledby="wishlist-tab">
+                    <ul class="list-unstyled mt-4 ml-4">
+                        {% for item in wishlist %}
+                        <li class="media mt-4">
+                            <img class="mr-3" src="{{item.ISBN13.imageURL}}" alt="Generic placeholder image">
+                            <div class="media-body">
+                                <h4 class="mt-0 mb-1">{{item.ISBN13.bookname}}</h4>
+                                    <b>Station:</b> Te-Aviv Center<br>
+                                     
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
-        </div>
 
     </main>
 

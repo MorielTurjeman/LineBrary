@@ -130,14 +130,16 @@ class Order(models.Model):
     returned=models.BooleanField(default=False)
 
 # contributions
-class AddBook(models.Model):
+class Contributions(models.Model):
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     ISBN13 = models.ForeignKey(Book , on_delete=models.CASCADE)
     station = models.IntegerField()
     condition = models.CharField( max_length = 20 ,choices=[('Like New' ,'Like New'), ( 'Used' ,'Used'), ( 'Collectible' , 'Collectible')], default='LikeNew')
 
 
-
+class Wishlist(models.Model):
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    ISBN13 = models.ForeignKey(Book , on_delete=models.CASCADE)
 
 
 

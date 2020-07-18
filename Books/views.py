@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import User , Book , BookStationRelation , Order , categories
+from .models import User , Book , BookStationRelation , Order , categories, Contributions, Wishlist
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from .forms import BookForm, BookStationRelationForm
@@ -10,8 +10,6 @@ from django.db import IntegrityError
 from random import shuffle
 import os
 # Create your views here.
-
-
 
 
 def homepage(request):
@@ -69,8 +67,13 @@ def add_book(request):
 def user(request):
     if request.method == 'GET':
         orders = Order.objects.filter(user__username=request.user)
-        print(orders)
-        return render(request,'Books/user.html',{'User_Name':request.user, "orders" : orders}  )
+        contributions= Contributions.objects.filter(user__username=request.user)
+        wishlist= Wishlist.objects.filter(user__username=request.user)
+        
+        print(contributions)
+        return render(request,'Books/user.html',{'User_Name':request.user, "orders" : orders, 'contributions':contributions,}  )
+
+
 
 
 """

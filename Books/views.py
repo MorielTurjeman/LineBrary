@@ -20,9 +20,8 @@ def homepage(request):
         shuffle(categories_array)
         categories_books_relation_array = {}
         for category in categories_array: 
-            categories_books_relation_array[category] = Book.objects.filter(gener=category)
-        for x , y in categories_books_relation_array.items():
-            print(x , y)
+            if len(Book.objects.filter(gener=category)) > 0:
+                categories_books_relation_array[category] = Book.objects.filter(gener=category)
         return render(request , "Books/index.html", { 'User_Name' : User.username , 'Books_For_Recomended' : Books_For_Recomended , 'categories' : categories_array , 'books' : categories_books_relation_array })
     else: 
         return redirect("login_page")

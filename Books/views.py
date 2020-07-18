@@ -63,6 +63,18 @@ def logout_user(request):
 def add_book(request):
     if request.method == 'GET':
         return render(request, 'Books/addbook.html', {'station_form' : BookStationRelationForm() , 'book_form' : BookForm() })
+    else:
+        if request.POST['bookname'] != "" and request.POST['author'] != "" and request.POST['description'] != "" and language= request.POST['language'] != "" and page_count= request.POST['page_count'] != 0:
+            print("-----------------check-------------------")
+            b = Book(ISBN13=random.randint(0 , 999999999)  , bookname= request.POST['bookname'] , author= request.POST['author'] , gener= request.POST['gener'] , page_count= request.POST['page_count'] , condition=request.POST['condition'], image=request.POST['image'], language= request.POST['language'], description= request.POST['description'] , cover_type= request.POST['cover_type'])
+            b.imageURL = 'Books/Images/' +  b.image.url
+            b.save()
+            bsr = BookStationRelation(station=request.POST["station"], book= b)
+            bsr.save()
+            return redirect('homepage')
+        else:
+            return render(request, 'Books/addbook.html', {'station_form' : BookStationRelationForm() , 'book_form' : BookForm() , 'errMsg' : "An error occurred. The book isn't uploaded. Plese check the correctness." })
+
 
 def user(request):
     if request.method == 'GET':

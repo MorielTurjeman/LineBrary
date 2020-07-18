@@ -1,8 +1,8 @@
 from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.models import User
-from .models import BookStationRelation, Book, Order
-#from .models import Profile , BookStationRelation, Book, Order
+from .models import BookStationRelation, Book, Order,Profile
+
 
 
 stations = [
@@ -86,7 +86,7 @@ class BookForm(forms.ModelForm):
     
     class Meta:
         model = Book
-        fields = ('bookname', 'author', 'gener', 'language', 'page_count', 'condition', 'cover_type', 'image', 'description',)
+        fields = ('bookname', 'author', 'gener', 'language', 'page_count', 'cover_type', 'image', 'description',)
 
 class BookStationRelationForm(forms.ModelForm):
     '''
@@ -96,8 +96,21 @@ class BookStationRelationForm(forms.ModelForm):
         model = BookStationRelation
         fields = ('station',)
 
+class ProfileForm(ModelForm):
+    username = forms.CharField(label='User Name', max_length=100)
+    firstname = forms.CharField(label="First Name", max_length=30)
+    lastname = forms.CharField(label="Last Name", max_length=30)
+    email = forms.EmailField(label="Email")
+    password1 = forms.CharField(label="Password" , widget=forms.PasswordInput)
+    password2 = forms.CharField(label="Re-enter Password" , widget=forms.PasswordInput)
+    image = forms.ImageField(label="Image" , required=False)
+    class Meta:
+        model = Profile
+        fields = ('username' , 'firstname' , 'lastname' , 'email' , 'password1' , 'password2', 'image')
 
 
+
+    
 
 '''
 class Book(models.Model):
@@ -117,6 +130,7 @@ class Order(models.Model):
     user = models.ForeignKey(User , on_delete=models.CASCADE)
     ISBN13 = models.ForeignKey(Book , on_delete=models.CASCADE)
     station = models.IntegerField()
+    
 
 class ProfileForm(forms.ModelForm):
     image = forms.ImageField(label="Image" , required=False)
@@ -138,3 +152,4 @@ class ProfileForm(ModelForm):
         fields = ('userName' , 'firstname' , 'lastname' , 'email' , 'password1' , 'password2', 'image')
 
 '''
+

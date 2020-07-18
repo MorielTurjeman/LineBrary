@@ -2,7 +2,14 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from datetime import datetime    
+
 # Create your models here.
+
+class Profile(User):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, parent_link=True)
+    image = models.ImageField(upload_to='Users/Images/', blank=True)
+
 
 """
 class Profile(User):
@@ -101,13 +108,14 @@ class Book(models.Model):
     bookname = models.CharField(max_length=100)
     author = models.CharField(max_length=100)
     gener = models.CharField(max_length=100 , choices=categories , default="")
-    page_count = models.IntegerField(null=True)  
-    condition = models.CharField( max_length = 20 ,choices=[('Like New' ,'Like New'), ( 'Used' ,'Used'), ( 'Collectible' , 'Collectible')], default='LikeNew')
+    page_count = models.IntegerField(null=True)   
     image = models.ImageField(upload_to='Books/Images')
     imageURL = models.URLField(blank=True)
     language = models.CharField(max_length=20)
     description = models.CharField(max_length=2000 , default="")
     cover_type = models.CharField(max_length = 20 , choices=[( 'Hard' ,'Hard'), ( 'Soft' , 'Soft')], default='Hard')
+   
+
 
 
 class BookStationRelation(models.Model):
@@ -118,4 +126,19 @@ class Order(models.Model):
     user = models.ForeignKey(User , on_delete=models.CASCADE)
     ISBN13 = models.ForeignKey(Book , on_delete=models.CASCADE)
     station = models.IntegerField()
+    order_date=models.DateTimeField(default=datetime.now, blank=True)
+    returned=models.BooleanField(default=False)
+
+class AddBook(models.Model):
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    ISBN13 = models.ForeignKey(Book , on_delete=models.CASCADE)
+    station = models.IntegerField()
+    condition = models.CharField( max_length = 20 ,choices=[('Like New' ,'Like New'), ( 'Used' ,'Used'), ( 'Collectible' , 'Collectible')], default='LikeNew')
+
+
+
+
+
+
+
 

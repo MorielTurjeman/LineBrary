@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Book , BookStationRelation , Order
+from .models import Book , BookStationRelation , Order, AddBook
 #from .models import Book , BookStationRelation , Order , Profile
 
 # Register your models here.
@@ -7,4 +7,5 @@ from .models import Book , BookStationRelation , Order
 admin.site.register(Book)
 admin.site.register(BookStationRelation)
 admin.site.register(Order)
+admin.site.register(AddBook)
 #admin.site.register(Profile)

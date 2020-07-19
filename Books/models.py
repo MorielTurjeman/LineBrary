@@ -6,9 +6,13 @@ from datetime import datetime
 
 # Create your models here.
 
-class Profile(User):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, parent_link=True)
-    image = models.ImageField(upload_to='Users/Images/', blank=True)
+class Profile(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
+    email = models.EmailField()
+    default_station = models.CharField(max_length=100,choices=stations , default='Tel Aviv - Savidor Center')
+
 
 
 """

@@ -29,5 +29,6 @@ urlpatterns = [
     path("user/", views.user, name="user"),
     path("linkBooks", views.linkBooks, name="link_books"),
     path("booksInStation", views.bookLocation, name="book_location"),
+    path("user/wishlist/", views.wishlist, name="wishlist"),
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

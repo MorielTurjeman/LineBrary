@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_exempt
 from .models import User , Book , BookStationRelation , Order , categories, Contributions, Wishlist, stations
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
@@ -80,7 +81,7 @@ def user(request):
         orders = Order.objects.filter(user__username=request.user)
         contributions= Contributions.objects.filter(user__username=request.user)
         wishlist= Wishlist.objects.filter(user__username=request.user)
-        return render(request,'Books/user.html',{'User_Name':request.user, "orders" : orders, 'contributions':contributions,}  )
+        return render(request,'Books/user.html',{'User_Name':request.user, "orders" : orders, 'contributions':contributions, 'wishlist': wishlist}  )
 
 # def loans(request):
 #     if request.method=='GET':
@@ -131,3 +132,12 @@ def bookLocation(request):
             return JsonResponse({'station': rel[0].station})
         else:
             return JsonResponse({})
+
+@csrf_exempt
+def wishlist(request):
+    if request.method=='POST':
+        print("hello")
+        id=request.POST['name']
+        book=Book.objects.filter(bookname=id)[0]
+        wish=Wishlist.objects.create(ISBN13=book, user=request.user)
+        return JsonResponse({})

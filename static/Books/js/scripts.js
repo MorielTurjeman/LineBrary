@@ -1,6 +1,3 @@
-
-
-
 $("#menu_button").click(function() {
     if(window.matchMedia("(min-width: 500px)").matches)
         {
@@ -69,7 +66,10 @@ function flip_panel_relation(name) {
         }
     });
     $("#loan_now_flip[name='" + name + "']").click( function() { $("#loan_now_panel[name='" + name + "']").slideToggle("slow"); });
-    $("#add_to_wishlist[name='" + name + "']").click(function(){ $(this).toggleClass("redColor");});
+    $("#add_to_wishlist[name='" + name + "']").click(function(){ 
+        $(this).toggleClass("redColor");
+        $.post("/user/wishlist/", {name: name} , function(){console.log("sucsses!")})
+    });
     $("#confirm_loan_now").click(function() {
         var d = new Date();
         $("#loan_now_panel[name='" + name + "']").empty();
@@ -81,7 +81,6 @@ function flip_panel_relation(name) {
 
 function appendBookScreen(name , source)
 {
-    
     console.log(!book_page_opened.includes(name));
     if(!book_page_opened.includes(name))
     {

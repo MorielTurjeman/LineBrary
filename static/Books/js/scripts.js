@@ -1,3 +1,6 @@
+
+
+
 $("#menu_button").click(function() {
     if(window.matchMedia("(min-width: 500px)").matches)
         {
@@ -41,13 +44,14 @@ function addBook()
 
 }
 
-function loadBookPage(name , source)
+function loadBookPage(name , source , information)
 {
     console.log(name);
     $(".fullscreen[name='" + name + "']").show();
     $(".book-page-image").attr("src" , source);
     $(".book_page_container > span").html("");
     $(".book_page_container > span").html(name);
+    $("#read_a_sample_panel > p").html(information);
     $(".close-button-book-page").click(  function() { $(".fullscreen[name='" + name + "']").hide();} );
     //$(".flip").click(function() { $(".panel").slideToggle("slow"); });
     flip_panel_relation(name);
@@ -66,10 +70,7 @@ function flip_panel_relation(name) {
         }
     });
     $("#loan_now_flip[name='" + name + "']").click( function() { $("#loan_now_panel[name='" + name + "']").slideToggle("slow"); });
-    $("#add_to_wishlist[name='" + name + "']").click(function(){ 
-        $(this).toggleClass("redColor");
-        $.post("/user/wishlist/", {name: name} , function(){console.log("sucsses!")})
-    });
+    $("#add_to_wishlist[name='" + name + "']").click(function(){ $(this).toggleClass("redColor");});
     $("#confirm_loan_now").click(function() {
         var d = new Date();
         $("#loan_now_panel[name='" + name + "']").empty();
@@ -79,12 +80,13 @@ function flip_panel_relation(name) {
     });
 };
 
-function appendBookScreen(name , source)
+function appendBookScreen(name , source, information)
 {
+    
     console.log(!book_page_opened.includes(name));
     if(!book_page_opened.includes(name))
     {
-        var book_screen = '\n<div name="'+ name +'" class="fullscreen">\n<svg class="bi bi-x close-button-book-page" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"> <path fill-rule="evenodd" d="M11.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708-.708l7-7a.5.5 0 0 1 .708 0z"/><path fill-rule="evenodd" d="M4.146 4.146a.5.5 0 0 0 0 .708l7 7a.5.5 0 0 0 .708-.708l-7-7a.5.5 0 0 0-.708 0z"/></svg>\n<div class="book_page_container">\n<img class="book-page-image" src="" alt="">\n<span></span>\n<div id="loan_now_flip" name="'+ name +'" class="flip">\n<i class="fas fa-book"></i><span>Loan Now</span>\n</div>\n<div id="loan_now_panel" name="'+ name +'" class="panel"><i class="fas fa-map-marker-alt"></i><span>Savidor-Center Tel Aviv</span><a href="">Change?</a><i id="confirm_loan_now" class="fas fa-check-circle"></i></div><div id="read_a_sample_flip" name="'+ name +'" class="flip"><i class="fas fa-search-plus"></i><span>Read a sample</span></div><div id="read_a_sample_panel" name="'+ name +'" class="panel"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam feugiat consequat pretium. Mauris ac lectus tortor. Maecenas consectetur volutpat imperdiet. Pellentesque venenatis interdum iaculis. Sed lectus ligula, sodales id sodales vel, ullamcorper rhoncus nisl. Aenean non vestibulum nibh. Ut vel mollis nunc. Pellentesque a ultrices arcu. Aliquam ex nunc, ultrices et imperdiet ut, maximus ut ex. Quisque congue sem est, non auctor arcu condimentum eu. Maecenas id urna purus. Nullam porttitor tempus congue.Quisque viverra augue sit amet aliquet hendrerit. Ut vel ligula lectus. Sed commodo aliquet lorem. Vestibulum sollicitudin pharetra blandit. Donec accumsan pretium euismod. Morbi vel purus dui.</p></div><div id="add_to_wishlist" name="'+ name +'" class="flip"><i class="fas fa-heart"></i><span>Add to wishlist</span></div></div></div>';
+        var book_screen = '\n<div name="'+ name +'" class="fullscreen">\n<svg class="bi bi-x close-button-book-page" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"> <path fill-rule="evenodd" d="M11.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708-.708l7-7a.5.5 0 0 1 .708 0z"/><path fill-rule="evenodd" d="M4.146 4.146a.5.5 0 0 0 0 .708l7 7a.5.5 0 0 0 .708-.708l-7-7a.5.5 0 0 0-.708 0z"/></svg>\n<div class="book_page_container">\n<img class="book-page-image" src="" alt="">\n<span></span>\n<div id="loan_now_flip" name="'+ name +'" class="flip">\n<i class="fas fa-book"></i><span>Loan Now</span>\n</div>\n<div id="loan_now_panel" name="'+ name +'" class="panel"><i class="fas fa-map-marker-alt"></i><span>Savidor-Center Tel Aviv</span><a href="">Change?</a><i id="confirm_loan_now" class="fas fa-check-circle"></i></div><div id="read_a_sample_flip" name="'+ name +'" class="flip"><i class="fas fa-search-plus"></i><span>Read More</span></div><div id="read_a_sample_panel" name="'+ name +'" class="panel"><p>'+ information +'</p></div><div id="add_to_wishlist" name="'+ name +'" class="flip"><i class="fas fa-heart"></i><span>Add to wishlist</span></div></div></div>';
         $("body").append(book_screen);
         book_page_opened += name;
         var d = {};
@@ -104,8 +106,9 @@ $(document).ready(function() {
 
         source = $(this).attr("src");
         name = $(this).attr("name");
-        appendBookScreen(name , source);
-        loadBookPage(name , source);
+        information = $(this).attr("title");
+        appendBookScreen(name , source , information);
+        loadBookPage(name , source , information);
     });
 
 });
